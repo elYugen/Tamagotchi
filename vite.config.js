@@ -8,7 +8,7 @@ export default defineConfig({
       manifest: {
         name: 'WatashiNoKodomo',
         short_name: 'Kodomo',
-        description: 'Un jeu Tamagotchi en PWA',
+        description: 'Un Tamagotchi en PWA',
         theme_color: '#1b1e26',
         icons: [
           {

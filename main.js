@@ -6,6 +6,7 @@ const app = document.getElementById('app');
 let name = document.getElementById('name');
 let gender = document.getElementById('gender');
 let age = document.getElementById('age');
+let sprite = document.getElementById('sprite');
 
 // Variable lié aux status
 let health = document.getElementById('health');
@@ -16,6 +17,7 @@ let happiness = document.getElementById('happiness');
 let feedButton = document.getElementById('feed');
 let playButton = document.getElementById('play');
 let healButton = document.getElementById('heal');
+let changeNameGenderButton = document.getElementById('changeNameGender');
 
 let tamagotchi = new Tamagotchi('Tama', 'male');
 
@@ -23,7 +25,7 @@ function renderUI() {
   name.textContent = tamagotchi.name;
   gender.textContent = `(${tamagotchi.gender})`;
   age.textContent = `${tamagotchi.age} jours`;
-
+  sprite.src = tamagotchi.sprite;
   health.textContent = `${tamagotchi.health}%`;
   hunger.textContent = `${tamagotchi.hunger}%`;
   happiness.textContent = `${tamagotchi.happiness}%`;
@@ -44,6 +46,22 @@ function renderUI() {
   });
 }
 
+  // Bouton de changement de sexe et nom
+  changeNameGenderButton.addEventListener('click', () => {
+    const newName = prompt("Entrez le nouveau nom :");
+    const newGender = prompt("Entrez le nouveau genre (male/female) :");
+    
+    if (newName && (newGender === 'male' || newGender === 'female')) {
+      tamagotchi.name = newName;
+      tamagotchi.gender = newGender;
+      tamagotchi.sprite = tamagotchi.genderSprite.getSprite(newGender);
+      tamagotchi.save();
+      renderUI();
+    } else {
+      alert("Nom ou genre invalide. Veuillez réessayer.");
+    }
+  });
+  
 // Met à jour automatiquement les états toutes les minutes
 setInterval(() => {
   tamagotchi.ageUp();

@@ -1,4 +1,5 @@
 import { saveToLocalStorage, loadFromLocalStorage } from '../utils/storage';
+import GenderSprite from './genderSprite';
 
 class Tamagotchi {
     constructor(name, gender) {
@@ -8,11 +9,13 @@ class Tamagotchi {
         this.hunger = 50;
         this.health = 100;
         this.happiness = 50;
-        this.sprite = null; // A faire plus tard
+        this.genderSprite = new GenderSprite();
+
         this.lastUpdated = Date.now(); // Timestamp de la dernière mise à jour
 
         this.load();
         this.updateStateOnReturn();
+        this.sprite = this.genderSprite.getSprite(this.gender);
     }
 
     save() {
@@ -23,7 +26,7 @@ class Tamagotchi {
             hunger: this.hunger,
             health: this.health,
             happiness: this.happiness,
-            sprite: this.sprite,
+            // sprite: this.sprite,
             lastUpdated: this.lastUpdated,
         });
     }
@@ -32,6 +35,8 @@ class Tamagotchi {
         const data = loadFromLocalStorage('tamagotchi');
         if (data) {
             Object.assign(this, data);
+            this.genderSprite = new GenderSprite();
+            this.sprite = this.genderSprite.getSprite(this.gender);
         }
     }
 

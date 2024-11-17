@@ -33,9 +33,9 @@ body {
     width: 100px;
     height: 30px;
 
-    span {
+    /* span {
         margin-top: -4px;
-    }
+    } */
 }
 
 .hunger {
@@ -50,9 +50,9 @@ body {
     width: 100px;
     height: 30px;
 
-    span {
+    /* span {
         margin-top: -4px;
-    }
+    } */
 }
 
 .happiness {
@@ -67,9 +67,9 @@ body {
     width: 100px;
     height: 30px;
 
-    span {
+    /* span {
         margin-top: -4px;
-    }
+    } */
 }
 
 /* Bouton d'intéraction */
@@ -102,6 +102,7 @@ body {
         align-items: center;
         gap: 10px;
     }
+    
     span {
         font-size: 20px;
     }

@@ -1,4 +1,4 @@
-import Tamagotchi from './classes/Tamagotchi';
+import Tamagotchi from './classes/tamagotchi';
 
 const app = document.getElementById('app');
 let tamagotchi = new Tamagotchi('Tama', 'male');

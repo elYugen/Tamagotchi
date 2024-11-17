@@ -1,61 +1,80 @@
+import { saveToLocalStorage, loadFromLocalStorage } from '../utils/storage';
+
 class Tamagotchi {
     constructor(name, gender) {
         this.name = name;
         this.gender = gender;
         this.age = 0;
-        this.hunger = 100;
-        this.happiness = 100;
+        this.hunger = 50;
         this.health = 100;
-        this.sprite = null // A faire plus tard
+        this.happiness = 50;
+        this.sprite = null; // A faire plus tard
+        this.lastUpdated = Date.now(); // Timestamp de la dernière mise à jour
 
-        this.loadFromLocalStorage();
+        this.load();
+        this.updateStateOnReturn();
     }
 
-    saveToLocalStorage() { // Sauvegarde les données du Tamagotchi dans le localStorage
-        const data = {
-          name: this.name,
-          gender: this.gender,
-          age: this.age,
-          hunger: this.hunger,
-          health: this.health,
-          happiness: this.happiness,
-          sprite: this.sprite,
-        };
-        localStorage.setItem('tamagotchi', JSON.stringify(data));
+    save() {
+        saveToLocalStorage('tamagotchi', {
+            name: this.name,
+            gender: this.gender,
+            age: this.age,
+            hunger: this.hunger,
+            health: this.health,
+            happiness: this.happiness,
+            sprite: this.sprite,
+            lastUpdated: this.lastUpdated,
+        });
     }
 
-    loadFromLocalStorage() { // Récupère les données du Tamagotchi depuis le localStorage
-        const data = JSON.parse(localStorage.getItem('tamagotchi')); // Récupère au format JSON l'objet "tamagotchi" enregistré dans le localStorage
-        if (data) { // Si data existe alors on l'assigne à this
-          Object.assign(this, data);
-        }  else {
-            console.log("Aucune information à récupérer");           
+    load() {
+        const data = loadFromLocalStorage('tamagotchi');
+        if (data) {
+            Object.assign(this, data);
         }
     }
 
+    updateStateOnReturn() {
+        const now = Date.now();
+        const elapsedMinutes = Math.floor((now - this.lastUpdated) / 60000); // Temps écoulé en minutes
+
+        if (elapsedMinutes > 0) {
+            this.age += Math.floor(elapsedMinutes / 60); // Ajoute 1 an toutes les 60 minutes
+            this.hunger = Math.min(100, this.hunger + elapsedMinutes * 2); // Augmente la faim
+            this.happiness = Math.max(0, this.happiness - elapsedMinutes); // Réduit le bonheur
+            this.health = Math.max(0, this.health - Math.floor(elapsedMinutes / 2)); // Réduit la santé
+        }
+
+        this.lastUpdated = now;
+        this.save();
+    }
+
+    // Méthodes pour gérer les états
     feed() {
         this.hunger = Math.max(0, this.hunger - 10);
-        this.saveToLocalStorage();
+        this.save();
     }
-    
+
     play() {
         this.happiness = Math.min(100, this.happiness + 10);
         this.hunger = Math.min(100, this.hunger + 5);
-        this.saveToLocalStorage();
+        this.save();
     }
 
     heal() {
         this.health = Math.min(100, this.health + 20);
-        this.saveToLocalStorage();
+        this.save();
     }
-    
+
     ageUp() {
         this.age += 1;
         this.hunger = Math.min(100, this.hunger + 10);
         this.happiness = Math.max(0, this.happiness - 5);
         this.health = Math.max(0, this.health - 10);
-        this.saveToLocalStorage();
-    }   
+        this.lastUpdated = Date.now();
+        this.save();
+    }
 }
 
 export default Tamagotchi;

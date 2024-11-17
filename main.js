@@ -1,9 +1,7 @@
-import Tamagotchi from './classes/tamagotchi';
+import Tamagotchi from './classes/Tamagotchi';
 
 const app = document.getElementById('app');
-
-// Initialisation du Tamagotchi
-let tamagotchi = new Tamagotchi('Tama', 'male'); // Peut être remplacé par une interface de choix
+let tamagotchi = new Tamagotchi('Tama', 'male');
 
 function renderUI() {
   app.innerHTML = `
@@ -33,10 +31,27 @@ function renderUI() {
   });
 }
 
-renderUI();
-
-// Simulation de vieillissement
+// Met à jour automatiquement les états toutes les minutes
 setInterval(() => {
   tamagotchi.ageUp();
   renderUI();
-}, 60000); // Vieillit toutes les 60 secondes
+}, 60000);
+
+// Gère la visibilité de la page
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    tamagotchi.updateStateOnReturn();
+    renderUI();
+  } else {
+    tamagotchi.lastUpdated = Date.now();
+    tamagotchi.save();
+  }
+});
+
+// Sauvegarde l'état lors de la fermeture de la page
+window.addEventListener('beforeunload', () => {
+  tamagotchi.lastUpdated = Date.now();
+  tamagotchi.save();
+});
+
+renderUI();

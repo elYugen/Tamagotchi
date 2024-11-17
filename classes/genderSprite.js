@@ -1,7 +1,7 @@
 class GenderSprite {
     constructor() {
-        this.boySprite = "./sprites/boy2.png";
-        this.girlSprite = "./sprites/girl4.png";
+        this.boySprite = "sprites/boy2.png";
+        this.girlSprite = "sprites/girl4.png";
     }
 
     getSprite(gender) {

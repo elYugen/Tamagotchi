@@ -1,31 +1,44 @@
 import Tamagotchi from './classes/tamagotchi';
 
 const app = document.getElementById('app');
+
+// Variable lié aux infos du Tamagotchi
+let name = document.getElementById('name');
+let gender = document.getElementById('gender');
+let age = document.getElementById('age');
+
+// Variable lié aux status
+let health = document.getElementById('health');
+let hunger = document.getElementById('hunger');
+let happiness = document.getElementById('happiness');
+
+// Variable lié aux boutons d'intéractions
+let feedButton = document.getElementById('feed');
+let playButton = document.getElementById('play');
+let healButton = document.getElementById('heal');
+
 let tamagotchi = new Tamagotchi('Tama', 'male');
 
 function renderUI() {
-  app.innerHTML = `
-    <h1>${tamagotchi.name} (${tamagotchi.gender})</h1>
-    <p>Âge : ${tamagotchi.age}</p>
-    <p>Faim : ${tamagotchi.hunger}</p>
-    <p>Santé : ${tamagotchi.health}</p>
-    <p>Bonheur : ${tamagotchi.happiness}</p>
-    <button id="feed">Nourrir</button>
-    <button id="play">Jouer</button>
-    <button id="heal">Soigner</button>
-  `;
+  name.textContent = tamagotchi.name;
+  gender.textContent = `(${tamagotchi.gender})`;
+  age.textContent = `${tamagotchi.age} jours`;
 
-  document.getElementById('feed').addEventListener('click', () => {
+  health.textContent = `${tamagotchi.health}%`;
+  hunger.textContent = `${tamagotchi.hunger}%`;
+  happiness.textContent = `${tamagotchi.happiness}%`;
+
+  feedButton.addEventListener('click', () => {
     tamagotchi.feed();
     renderUI();
   });
 
-  document.getElementById('play').addEventListener('click', () => {
+  playButton.addEventListener('click', () => {
     tamagotchi.play();
     renderUI();
   });
 
-  document.getElementById('heal').addEventListener('click', () => {
+  healButton.addEventListener('click', () => {
     tamagotchi.heal();
     renderUI();
   });

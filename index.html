@@ -8,6 +8,39 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <!-- Barre de status -->
+    <div class="status">
+      <div class="health">
+        <span>❤️</span>
+        <strong id="health">100%</strong>
+      </div>
+
+      <div class="hunger">
+        <span>🍖</span>
+        <strong  id="hunger">100%</strong>
+      </div>
+
+      <div class="happiness">
+        <span>🙂</span>
+        <strong  id="happiness">100%</strong>
+      </div>    
+    </div>
+
+    <!-- Information de l'ami -->
+     <div class="tamagotchi">
+        <div class="tamagotchiNameGender">
+            <h1 id="name">Mon enfant</h1>
+            <span id="gender"></span>
+        </div>
+        <span id="age"></span>
+     </div>
+
+    <!-- Bouton d'intéraction -->
+    <div class="bouton">
+      <button id="feed">Nourrir</button>
+      <button id="play">Jouer</button>
+      <button id="heal">Soigner</button>
+    </div>
     <div id="app"></div>
     <script type="module" src="/main.js"></script>
   </body>
